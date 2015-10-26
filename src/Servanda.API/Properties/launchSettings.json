@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "web": {
+      "commandName": "web",
+      "workingDirectory": "C:\\projects\\Servanda\\src\\Servanda.API",
+      "environmentVariables": {
+        "ASPNET_ENV": "Development"
+      },
+      "sdkVersion": "dnx-clr-win-x64.1.0.0-beta8"
+    },
+    "WebListener": {
+      "commandName": "WebListener",
+      "sdkVersion": "dnx-coreclr-win-x64.1.0.0-beta8"
+    }
+  }
+}

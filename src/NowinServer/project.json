@@ -1,0 +1,25 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "NowinServer Class Library",
+  "authors": [ "Servanda" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "dependencies": {
+    "Microsoft.Framework.Configuration.Abstractions": "1.0.0-*",
+    "Microsoft.AspNet.Hosting": "1.0.0-*",
+    "Microsoft.Framework.DependencyInjection": "1.0.0-*",
+    "Microsoft.AspNet.Owin": "1.0.0-*"
+  },
+  "commands": {
+    "web": "Microsoft.AspNet.Hosting --server NowinServer"
+  },  
+  "frameworks": {
+    "dnx451": {
+      "dependencies": {
+        "Nowin": "0.19.0.0"
+      }    
+    }
+  }
+}
