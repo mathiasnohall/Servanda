@@ -1445,6 +1445,24 @@
           "lib/dotnet/System.Diagnostics.Tracing.Telemetry.dll": {}
         }
       },
+      "System.Linq/4.0.1-beta-23409": {
+        "type": "package",
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Linq.Parallel/4.0.1-beta-23409": {
+        "type": "package",
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
       "System.Reflection.Metadata/1.1.0-alpha-00014": {
         "type": "package",
         "dependencies": {
@@ -3027,6 +3045,24 @@
         },
         "runtime": {
           "lib/dotnet/System.Diagnostics.Tracing.Telemetry.dll": {}
+        }
+      },
+      "System.Linq/4.0.1-beta-23409": {
+        "type": "package",
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Linq.Parallel/4.0.1-beta-23409": {
+        "type": "package",
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
         }
       },
       "System.Reflection.Metadata/1.1.0-alpha-00014": {
@@ -4613,6 +4649,24 @@
           "lib/dotnet/System.Diagnostics.Tracing.Telemetry.dll": {}
         }
       },
+      "System.Linq/4.0.1-beta-23409": {
+        "type": "package",
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Linq.Parallel/4.0.1-beta-23409": {
+        "type": "package",
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
       "System.Reflection.Metadata/1.1.0-alpha-00014": {
         "type": "package",
         "dependencies": {
@@ -5957,6 +6011,70 @@
         "System.Diagnostics.Tracing.Telemetry.nuspec"
       ]
     },
+    "System.Linq/4.0.1-beta-23409": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "PaualgQ0um/Dw8y3iKD5bUNZ4PoJGfmFgKh3U//0VsCj+IEQH3oeKwvrPIlWr/YHKwwmLz0uvWKPWxGG+u5Oag==",
+      "files": [
+        "lib/dotnet/de/System.Linq.xml",
+        "lib/dotnet/es/System.Linq.xml",
+        "lib/dotnet/fr/System.Linq.xml",
+        "lib/dotnet/it/System.Linq.xml",
+        "lib/dotnet/ja/System.Linq.xml",
+        "lib/dotnet/ko/System.Linq.xml",
+        "lib/dotnet/ru/System.Linq.xml",
+        "lib/dotnet/System.Linq.dll",
+        "lib/dotnet/System.Linq.xml",
+        "lib/dotnet/zh-hans/System.Linq.xml",
+        "lib/dotnet/zh-hant/System.Linq.xml",
+        "lib/net45/_._",
+        "lib/netcore50/System.Linq.dll",
+        "lib/netcore50/System.Linq.xml",
+        "lib/win8/_._",
+        "lib/wp80/_._",
+        "lib/wpa81/_._",
+        "ref/dotnet/System.Linq.dll",
+        "ref/net45/_._",
+        "ref/netcore50/System.Linq.dll",
+        "ref/win8/_._",
+        "ref/wp80/_._",
+        "ref/wpa81/_._",
+        "System.Linq.4.0.1-beta-23409.nupkg",
+        "System.Linq.4.0.1-beta-23409.nupkg.sha512",
+        "System.Linq.nuspec"
+      ]
+    },
+    "System.Linq.Parallel/4.0.1-beta-23409": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "+IkfON2IAR/A+Fe7ZXe4dIkqU4CEDSBR0Yz1EV9fx6LgWuoawy1Pf3hlT76Tg7PFFJWPuCdfUqU8W2Wk2OM/Yw==",
+      "files": [
+        "lib/dotnet/de/System.Linq.Parallel.xml",
+        "lib/dotnet/es/System.Linq.Parallel.xml",
+        "lib/dotnet/fr/System.Linq.Parallel.xml",
+        "lib/dotnet/it/System.Linq.Parallel.xml",
+        "lib/dotnet/ja/System.Linq.Parallel.xml",
+        "lib/dotnet/ko/System.Linq.Parallel.xml",
+        "lib/dotnet/ru/System.Linq.Parallel.xml",
+        "lib/dotnet/System.Linq.Parallel.dll",
+        "lib/dotnet/System.Linq.Parallel.xml",
+        "lib/dotnet/zh-hans/System.Linq.Parallel.xml",
+        "lib/dotnet/zh-hant/System.Linq.Parallel.xml",
+        "lib/net45/_._",
+        "lib/netcore50/System.Linq.Parallel.dll",
+        "lib/netcore50/System.Linq.Parallel.xml",
+        "lib/win8/_._",
+        "lib/wpa81/_._",
+        "ref/dotnet/System.Linq.Parallel.dll",
+        "ref/net45/_._",
+        "ref/netcore50/System.Linq.Parallel.dll",
+        "ref/win8/_._",
+        "ref/wpa81/_._",
+        "System.Linq.Parallel.4.0.1-beta-23409.nupkg",
+        "System.Linq.Parallel.4.0.1-beta-23409.nupkg.sha512",
+        "System.Linq.Parallel.nuspec"
+      ]
+    },
     "System.Reflection.Metadata/1.1.0-alpha-00014": {
       "type": "package",
       "serviceable": true,
@@ -6233,6 +6351,9 @@
   "projectFileDependencyGroups": {
     "": [
       "Servanda.API >= 1.0.0-*",
+      "System.Collections.Immutable >= 1.1.36",
+      "System.Linq >= 4.0.1-beta-23409",
+      "System.Linq.Parallel >= 4.0.1-beta-23409",
       "xunit >= 2.1.0-*",
       "xunit.runner.dnx >= 2.1.0-beta6-build191"
     ],

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Servanda.API.Repositories
@@ -26,11 +27,11 @@ namespace Servanda.API.Repositories
 
         public async Task HandleUpload(IFormFile file)
         {
-            var memoryStream =  await _streamHandler.CopyToMemoryStream(file.OpenReadStream());
+            var memoryStream = await _streamHandler.CopyToMemoryStream(file.OpenReadStream());
 
-            // cryptostream?
+            var cryptoStream = await _streamHandler.EncryptStream(memoryStream);
 
-            await Task.Run(() => _streamHandler.WriteMemoryStreamToFile(memoryStream, _hostingEnvironment.WebRootPath + "uploads"));
+            await Task.Run(() => _streamHandler.WriteMemoryStreamToFile(cryptoStream, _hostingEnvironment.WebRootPath + "uploads"));
         }
     }
 }

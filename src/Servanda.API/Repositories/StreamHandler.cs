@@ -8,6 +8,8 @@ namespace Servanda.API.Repositories
     {
         Task<MemoryStream> CopyToMemoryStream(Stream stream);
 
+        Task<MemoryStream> EncryptStream(MemoryStream memoryStream);
+
         void WriteMemoryStreamToFile(MemoryStream stream, string path);
     }
 
@@ -18,6 +20,11 @@ namespace Servanda.API.Repositories
             var memoryStream = new MemoryStream();
             await stream.CopyToAsync(memoryStream);
             return memoryStream;            
+        }
+
+        public Task<MemoryStream> EncryptStream(MemoryStream memoryStream)
+        {
+            throw new NotImplementedException();
         }
 
         public void WriteMemoryStreamToFile(MemoryStream memoryStream, string path)

@@ -1,18 +1,15 @@
 ﻿using Servanda.API.Repositories;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Servanda.API.Test.For_StreamHandler
 {
     public class when_WriteMemoryStreamToFile : IDisposable
     {
-        protected static IStreamHandler _streamHandler;
-        protected static MemoryStream _stream;
-        private static string _unitTestFilePath;
+        protected readonly IStreamHandler _streamHandler;
+        protected readonly MemoryStream _stream;
+        private readonly string _unitTestFilePath;
 
         public when_WriteMemoryStreamToFile()
         {
