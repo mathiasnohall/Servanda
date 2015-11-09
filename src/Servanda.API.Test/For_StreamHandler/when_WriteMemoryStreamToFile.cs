@@ -27,7 +27,7 @@ namespace Servanda.API.Test.For_StreamHandler
         }
 
         [Fact]
-        public void Test()
+        public void It_should_write_memorystream_to_disk()
         {
             _streamHandler.WriteMemoryStreamToFile(_stream, _unitTestFilePath);
             

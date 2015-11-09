@@ -19,7 +19,7 @@ namespace Servanda.API.Test.For_StreamHandler
         }
 
         [Fact]
-        public async void Test()
+        public async void It_should_copy_stream_to_memorystream()
         {
             _result = await _streamHandler.CopyToMemoryStream(_stream);
             var data = _result.ToArray();
