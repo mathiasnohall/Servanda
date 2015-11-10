@@ -7,13 +7,13 @@ namespace Servanda.API.Repositories
 {
     public interface IStreamHandler
     {
-        Task<MemoryStream> CopyToMemoryStream(Stream stream);
+        Task<byte[]> CopyStreamToByteBuffer(Stream stream);
 
-        Task<MemoryStream> EncryptData(MemoryStream sourceStream);
+        Task<byte[]> EncryptData(byte[] buffer);
 
-        Task<MemoryStream> DecryptData(MemoryStream sourceStream);
+        Task<byte[]> DecryptData(byte[] buffer);
 
-        void WriteMemoryStreamToFile(MemoryStream memoryStream, string path);
+        void WriteBufferToFile(byte[] buffer, string path);
     }
 
     public class StreamHandler : IStreamHandler
@@ -33,42 +33,54 @@ namespace Servanda.API.Repositories
             _cryptor.IV = Encoding.ASCII.GetBytes(_IV);
         }
 
-        public async Task<MemoryStream> CopyToMemoryStream(Stream stream)
+        public async Task<byte[]> CopyStreamToByteBuffer(Stream stream)
         {
             var memoryStream = new MemoryStream();
             await stream.CopyToAsync(memoryStream);
-            return memoryStream;            
+
+            return memoryStream.ToArray();
         }
 
-        public async Task<MemoryStream> DecryptData(MemoryStream sourceStream)
+        public Task<byte[]> DecryptData(byte[] buffer)
         {
-            var memoryStream = new MemoryStream();
-            CryptoStream cryptoStream = new CryptoStream(memoryStream, _cryptor.CreateDecryptor(), CryptoStreamMode.Write);
-
-            var buffer = sourceStream.ToArray();
-            await cryptoStream.WriteAsync(buffer, 0, buffer.Length);
-            cryptoStream.FlushFinalBlock();
-
-            var awd = memoryStream.ToArray();
-
-            return memoryStream;
+            return Task.Run<byte[]>(() =>
+            {
+                using (var encryptor = _cryptor.CreateDecryptor())
+                {
+                    return PerformCryptography(encryptor, buffer);
+                }
+            });
         }
 
-        public async Task<MemoryStream> EncryptData(MemoryStream sourceStream)
+        public Task<byte[]> EncryptData(byte[] buffer)
         {
-            var memoryStream = new MemoryStream();
-            CryptoStream cryptoStream = new CryptoStream(memoryStream, _cryptor.CreateEncryptor(), CryptoStreamMode.Write);
-
-            var buffer = sourceStream.ToArray();
-            sourceStream.Dispose();
-            await cryptoStream.WriteAsync(buffer, 0, buffer.Length);
-            return memoryStream;
+           return Task.Run<byte[]>(() =>
+           {
+               using (var encryptor = _cryptor.CreateEncryptor())
+               {
+                   return PerformCryptography(encryptor, buffer);
+               }
+           });
         }
 
-        public void WriteMemoryStreamToFile(MemoryStream memoryStream, string path)
+        private byte[] PerformCryptography(ICryptoTransform cryptoTransform, byte[] data)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var cryptoStream = new CryptoStream(memoryStream, cryptoTransform, CryptoStreamMode.Write))
+                {
+                    cryptoStream.Write(data, 0, data.Length);
+                    cryptoStream.FlushFinalBlock();
+                    return memoryStream.ToArray();
+                }
+            }
+        }
+
+        // todo refactor
+        public void WriteBufferToFile(byte[] buffer, string path)
         {
             using (var fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-            using (memoryStream)
+            using (var memoryStream = new MemoryStream(buffer))
             {
                 byte[] bytes = new byte[memoryStream.Length];
                 memoryStream.Read(bytes, 0, (int)memoryStream.Length);

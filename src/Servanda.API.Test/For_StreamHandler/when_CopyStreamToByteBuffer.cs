@@ -5,13 +5,13 @@ using Xunit;
 
 namespace Servanda.API.Test.For_StreamHandler
 {
-    public class when_CopyToMemoryStream : IDisposable
+    public class when_CopyStreamToByteBuffer : IDisposable
     {
         private readonly IStreamHandler _streamHandler;
         private readonly Stream _stream;
-        private MemoryStream _result;
+        private byte[] _result;
 
-        public when_CopyToMemoryStream()
+        public when_CopyStreamToByteBuffer()
         {
             _streamHandler = new StreamHandler();
             var bytearray = new byte[666];
@@ -21,15 +21,13 @@ namespace Servanda.API.Test.For_StreamHandler
         [Fact]
         public async void It_should_copy_stream_to_memorystream()
         {
-            _result = await _streamHandler.CopyToMemoryStream(_stream);
-            var data = _result.ToArray();
-            Assert.Equal(data.Length, 666);
+            _result = await _streamHandler.CopyStreamToByteBuffer(_stream);
+            Assert.Equal(_result.Length, 666);
         }
 
         public void Dispose()
         {
             _stream.Dispose();
-            _result.Dispose();
         }
     }
 }

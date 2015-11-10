@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Servanda.API.Repositories
@@ -27,11 +22,11 @@ namespace Servanda.API.Repositories
 
         public async Task HandleUpload(IFormFile file)
         {
-            var memoryStream = await _streamHandler.CopyToMemoryStream(file.OpenReadStream());
+            var data = await _streamHandler.CopyStreamToByteBuffer(file.OpenReadStream());
 
-            var encryptedSream = await _streamHandler.EncryptData(memoryStream);
+            var encryptedData = await _streamHandler.EncryptData(data);
 
-            await Task.Run(() => _streamHandler.WriteMemoryStreamToFile(encryptedSream, _hostingEnvironment.WebRootPath + "uploads"));
+            await Task.Run(() => _streamHandler.WriteBufferToFile(encryptedData, _hostingEnvironment.WebRootPath + "uploads"));
         }
     }
 }

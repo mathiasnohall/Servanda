@@ -1,10 +1,6 @@
 ﻿using Servanda.API.Repositories;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Servanda.API.Test.For_StreamHandler
@@ -12,7 +8,6 @@ namespace Servanda.API.Test.For_StreamHandler
     public class when_encrypt_then_decrypt : IDisposable
     {
         private readonly IStreamHandler _streamHandler;
-        private readonly MemoryStream _nonEncryptedSourceStream;
         private readonly byte[] _nonEncryptedSourceData;
 
         public when_encrypt_then_decrypt()
@@ -20,24 +15,20 @@ namespace Servanda.API.Test.For_StreamHandler
             _streamHandler = new StreamHandler();
 
             _nonEncryptedSourceData = Encoding.UTF8.GetBytes("Servanda");
-            _nonEncryptedSourceStream = new MemoryStream(_nonEncryptedSourceData);
-
         }
 
         [Fact]
         public async void Encrypted_stream_should_be_decryptable()
         {
-            var encryptedStream = await _streamHandler.EncryptData(_nonEncryptedSourceStream);
-            var deCryptedStream = await _streamHandler.DecryptData(encryptedStream);
-            var deCryptedData = Encoding.UTF8.GetString(deCryptedStream.ToArray());
+            var encryptedData = await _streamHandler.EncryptData(_nonEncryptedSourceData);
 
-            Assert.Equal(_nonEncryptedSourceData, deCryptedStream.ToArray());
-            
+            var decryptedData = await _streamHandler.DecryptData(encryptedData);
+
+            Assert.Equal(_nonEncryptedSourceData, decryptedData);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
         }
     }
 }
