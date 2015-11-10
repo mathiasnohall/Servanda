@@ -1,5 +1,12 @@
 {
   "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNET_ENV": "Development"
+      }
+    },
     "web": {
       "commandName": "web",
       "workingDirectory": "C:\\projects\\Servanda\\src\\Servanda.API",
@@ -10,7 +17,7 @@
     },
     "WebListener": {
       "commandName": "WebListener",
-      "sdkVersion": "dnx-coreclr-win-x64.1.0.0-beta8"
+      "sdkVersion": "dnx-clr-win-x64.1.0.0-beta8"
     }
   }
 }

@@ -29,9 +29,9 @@ namespace Servanda.API.Repositories
         {
             var memoryStream = await _streamHandler.CopyToMemoryStream(file.OpenReadStream());
 
-            var cryptoStream = await _streamHandler.EncryptStream(memoryStream);
+            var encryptedSream = await _streamHandler.EncryptData(memoryStream);
 
-            await Task.Run(() => _streamHandler.WriteMemoryStreamToFile(cryptoStream, _hostingEnvironment.WebRootPath + "uploads"));
+            await Task.Run(() => _streamHandler.WriteMemoryStreamToFile(encryptedSream, _hostingEnvironment.WebRootPath + "uploads"));
         }
     }
 }

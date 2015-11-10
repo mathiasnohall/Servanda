@@ -1421,7 +1421,10 @@
           "Microsoft.Framework.Logging.Console": "1.0.0-beta8",
           "Microsoft.Framework.Logging.Debug": "1.0.0-beta8",
           "NowinServer": null
-        }
+        },
+        "frameworkAssemblies": [
+          "System.Security"
+        ]
       },
       "System.Collections.Immutable/1.1.36": {
         "type": "package",
@@ -3023,7 +3026,10 @@
           "Microsoft.Framework.Logging.Console": "1.0.0-beta8",
           "Microsoft.Framework.Logging.Debug": "1.0.0-beta8",
           "NowinServer": null
-        }
+        },
+        "frameworkAssemblies": [
+          "System.Security"
+        ]
       },
       "System.Collections.Immutable/1.1.36": {
         "type": "package",
@@ -4625,7 +4631,10 @@
           "Microsoft.Framework.Logging.Console": "1.0.0-beta8",
           "Microsoft.Framework.Logging.Debug": "1.0.0-beta8",
           "NowinServer": null
-        }
+        },
+        "frameworkAssemblies": [
+          "System.Security"
+        ]
       },
       "System.Collections.Immutable/1.1.36": {
         "type": "package",
