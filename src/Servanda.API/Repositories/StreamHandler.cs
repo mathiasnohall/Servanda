@@ -18,13 +18,19 @@ namespace Servanda.API.Repositories
 
     public class StreamHandler : IStreamHandler
     {
+        private readonly DESCryptoServiceProvider _cryptor;
+
         private readonly string _cryptoKey; // consider removing this var to somewhere more secret place
         private readonly string _IV; // consider removing this var to somewhere more secret place
 
         public StreamHandler()
         {
             _cryptoKey = "SERVANDA"; // obviously change this in the future :)
-            _IV = "SERVANDA"; 
+            _IV = "SERVANDA";
+
+            _cryptor = new DESCryptoServiceProvider();
+            _cryptor.Key = Encoding.ASCII.GetBytes(_cryptoKey);
+            _cryptor.IV = Encoding.ASCII.GetBytes(_IV);
         }
 
         public async Task<MemoryStream> CopyToMemoryStream(Stream stream)
@@ -36,29 +42,22 @@ namespace Servanda.API.Repositories
 
         public async Task<MemoryStream> DecryptData(MemoryStream sourceStream)
         {
-            DESCryptoServiceProvider cryptic = new DESCryptoServiceProvider();
-
-            cryptic.Key = Encoding.ASCII.GetBytes(_cryptoKey);
-            cryptic.IV = Encoding.ASCII.GetBytes(_IV);
-
             var memoryStream = new MemoryStream();
-            CryptoStream cryptoStream = new CryptoStream(memoryStream, cryptic.CreateDecryptor(), CryptoStreamMode.Write);
+            CryptoStream cryptoStream = new CryptoStream(memoryStream, _cryptor.CreateDecryptor(), CryptoStreamMode.Write);
 
+            var buffer = sourceStream.ToArray();
+            await cryptoStream.WriteAsync(buffer, 0, buffer.Length);
+            cryptoStream.FlushFinalBlock();
 
+            var awd = memoryStream.ToArray();
 
-
-            return null;
+            return memoryStream;
         }
 
         public async Task<MemoryStream> EncryptData(MemoryStream sourceStream)
         {
-            DESCryptoServiceProvider cryptic = new DESCryptoServiceProvider();
-
-            cryptic.Key = Encoding.ASCII.GetBytes(_cryptoKey);
-            cryptic.IV = Encoding.ASCII.GetBytes(_IV);
-
             var memoryStream = new MemoryStream();
-            CryptoStream cryptoStream = new CryptoStream(memoryStream, cryptic.CreateEncryptor(), CryptoStreamMode.Write);
+            CryptoStream cryptoStream = new CryptoStream(memoryStream, _cryptor.CreateEncryptor(), CryptoStreamMode.Write);
 
             var buffer = sourceStream.ToArray();
             sourceStream.Dispose();
