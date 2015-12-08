@@ -1,0 +1,24 @@
+{
+    "name": "servanda",
+    "description": "Ladda upp, signa, klart!",
+    "private": true,
+    "dependencies": {
+        "browserify": "^12.0.1",
+        "uglify-js": "^2.6.1",
+        "react": "^0.14.3"
+    },
+    {
+        "name": "my-package",
+        "browserify": {
+            "transform": [
+                ["reactify", {"es6": true}]
+            ]
+        }
+    }
+    "scripts": {
+        "build-js": "browserify ./_scripts/main.js | uglifyjs -c -m -o ./scripts/main.min.js",
+        "build-css": "node-sass ./_sass/main.scss -o ./_site/css/", 
+        "watch-jekyll": "watch -p '_pages/* | scripts/* | _layouts/*' -c 'jekyll build'",
+        "watch-js": "watch -p '_scripts/**/*.js' -c 'npm run build-js'",
+    }
+}
