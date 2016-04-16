@@ -7,6 +7,7 @@ using Microsoft.AspNet.Hosting.Server;
 using Microsoft.AspNet.Owin;
 using Microsoft.Framework.Configuration;
 using Nowin;
+using Microsoft.Extensions.Configuration;
 
 namespace NowinServer {
 
@@ -19,12 +20,6 @@ namespace NowinServer {
             return _callback(new OwinFeatureCollection(env));
         }
 
-        public IFeatureCollection Initialize(IConfiguration configuration)
-        {
-            // TODO: Parse config
-            return new FeatureCollection();
-        }
-
         public IDisposable Start(IFeatureCollection serverFeatures, Func<IFeatureCollection, Task> application)
         {
             var builder = ServerBuilder.New()
@@ -35,6 +30,11 @@ namespace NowinServer {
             var server = builder.Build();
             server.Start();
             return server;
+        }
+
+        public IFeatureCollection Initialize(Microsoft.Extensions.Configuration.IConfiguration configuration)
+        {
+            return new FeatureCollection();
         }
     }
 }

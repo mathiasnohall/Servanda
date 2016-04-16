@@ -26,7 +26,7 @@ namespace Servanda.API.Repositories
 
             var encryptedData = await _streamHandler.EncryptData(data);
 
-            await Task.Run(() => _streamHandler.WriteBufferToFile(encryptedData, _hostingEnvironment.WebRootPath + "uploads"));
+            await _streamHandler.WriteBufferToFile(encryptedData, _hostingEnvironment.WebRootPath + "uploads");
         }
     }
 }

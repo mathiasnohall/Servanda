@@ -13,7 +13,7 @@ namespace Servanda.API.Repositories
 
         Task<byte[]> DecryptData(byte[] buffer);
 
-        void WriteBufferToFile(byte[] buffer, string path);
+        Task WriteBufferToFile(byte[] buffer, string path);
     }
 
     public class StreamHandler : IStreamHandler
@@ -41,35 +41,29 @@ namespace Servanda.API.Repositories
             return memoryStream.ToArray();
         }
 
-        public Task<byte[]> DecryptData(byte[] buffer)
+        public async Task<byte[]> DecryptData(byte[] buffer)
         {
-            return Task.Run<byte[]>(() =>
+            using (var encryptor = _cryptor.CreateDecryptor())
             {
-                using (var encryptor = _cryptor.CreateDecryptor())
-                {
-                    return PerformCryptography(encryptor, buffer);
-                }
-            });
+                return await PerformCryptography(encryptor, buffer);
+            }
         }
 
-        public Task<byte[]> EncryptData(byte[] buffer)
+        public async Task<byte[]> EncryptData(byte[] buffer)
         {
-           return Task.Run<byte[]>(() =>
-           {
-               using (var encryptor = _cryptor.CreateEncryptor())
-               {
-                   return PerformCryptography(encryptor, buffer);
-               }
-           });
+            using (var encryptor = _cryptor.CreateEncryptor())
+            {
+                return await PerformCryptography(encryptor, buffer);
+            }
         }
 
-        private byte[] PerformCryptography(ICryptoTransform cryptoTransform, byte[] data)
+        private async Task<byte[]> PerformCryptography(ICryptoTransform cryptoTransform, byte[] data)
         {
             using (var memoryStream = new MemoryStream())
             {
                 using (var cryptoStream = new CryptoStream(memoryStream, cryptoTransform, CryptoStreamMode.Write))
                 {
-                    cryptoStream.Write(data, 0, data.Length);
+                    await cryptoStream.WriteAsync(data, 0, data.Length);
                     cryptoStream.FlushFinalBlock();
                     return memoryStream.ToArray();
                 }
@@ -77,14 +71,14 @@ namespace Servanda.API.Repositories
         }
 
         // todo refactor
-        public void WriteBufferToFile(byte[] buffer, string path)
+        public async Task WriteBufferToFile(byte[] buffer, string path)
         {
             using (var fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             using (var memoryStream = new MemoryStream(buffer))
             {
                 byte[] bytes = new byte[memoryStream.Length];
-                memoryStream.Read(bytes, 0, (int)memoryStream.Length);
-                fileStream.Write(bytes, 0, bytes.Length);
+                await memoryStream.ReadAsync(bytes, 0, (int)memoryStream.Length);
+                await fileStream.WriteAsync(bytes, 0, bytes.Length);
             };
 
         }

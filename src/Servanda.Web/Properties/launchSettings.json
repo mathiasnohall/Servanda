@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "WebListener": {
-      "commandName": "WebListener",
-      "sdkVersion": "dnx-clr-win-x64.1.0.0-beta8"
-    }
-  }
-}
