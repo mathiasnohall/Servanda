@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
+using System;
 using System.Threading.Tasks;
 
 namespace Servanda.API.Repositories
 {
     public interface IFileUploadHandler
     {
-        Task HandleUpload(IFormFile file);
+        Task<string> HandleUpload(IFormFile file);
     }
 
     public class FileUploadHandler : IFileUploadHandler
@@ -20,13 +21,17 @@ namespace Servanda.API.Repositories
             _hostingEnvironment = hostingEnvironment;
         }
 
-        public async Task HandleUpload(IFormFile file)
+        public async Task<string> HandleUpload(IFormFile file)
         {
             var data = await _streamHandler.CopyStreamToByteBuffer(file.OpenReadStream());
 
             var encryptedData = await _streamHandler.EncryptData(data);
 
-            await _streamHandler.WriteBufferToFile(encryptedData, _hostingEnvironment.WebRootPath + "uploads");
+            var uniqueFileName = Guid.NewGuid().ToString();
+
+            await _streamHandler.WriteBufferToFile(encryptedData, _hostingEnvironment.WebRootPath + "uploads/" + uniqueFileName);
+
+            return uniqueFileName;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Servanda.API.Controllers
     public class FileController : Controller
     {
         private readonly IFileUploadHandler _fileHandler;
+        private readonly IUserHandler _userHandler;
 
         public FileController(IFileUploadHandler fileHandler)
         {
@@ -16,9 +17,11 @@ namespace Servanda.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Upload(IFormFile file)
+        public async Task<IActionResult> Upload(IFormFile file, string userId)
         {
-            await _fileHandler.HandleUpload(file);            
+            var fileId = await _fileHandler.HandleUpload(file);
+
+            await _userHandler.AddFileToUserMapping(userId, fileId);     
 
             return View();
         }
