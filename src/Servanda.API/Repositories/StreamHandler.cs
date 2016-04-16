@@ -18,17 +18,20 @@ namespace Servanda.API.Repositories
 
     public class StreamHandler : IStreamHandler
     {
-        private readonly DESCryptoServiceProvider _cryptor;
+        private readonly AesCryptoServiceProvider _cryptor;
 
         private readonly string _cryptoKey; // consider removing this var to somewhere more secret place
         private readonly string _IV; // consider removing this var to somewhere more secret place
 
         public StreamHandler()
         {
-            _cryptoKey = "SERVANDA"; // obviously change this in the future :)
-            _IV = "SERVANDA";
+            _cryptoKey = "SERVANDASERVANDASERVANDASERVANDA"; // obviously change this in the future :)
+            _IV = "SERVANDASERVANDA";
 
-            _cryptor = new DESCryptoServiceProvider();
+            _cryptor = new AesCryptoServiceProvider();
+            _cryptor.BlockSize = 128;
+            _cryptor.KeySize = 256;
+            _cryptor.Padding = PaddingMode.PKCS7;
             _cryptor.Key = Encoding.ASCII.GetBytes(_cryptoKey);
             _cryptor.IV = Encoding.ASCII.GetBytes(_IV);
         }

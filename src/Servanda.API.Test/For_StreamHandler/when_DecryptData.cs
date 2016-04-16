@@ -13,7 +13,7 @@ namespace Servanda.API.Test.For_StreamHandler
         public when_DecryptData()
         {
             _streamHandler = new StreamHandler();
-            _encryptedData = new byte[16] { 44, 197, 89, 185, 143, 159, 49, 180, 117, 157, 67, 253, 45, 45, 24, 8 };
+            _encryptedData = new byte[16] { 230, 209, 2, 165, 181, 156, 96, 240, 38, 66, 226, 208, 109, 1, 108, 82 };
         }
 
         [Fact]
